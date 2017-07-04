@@ -5,7 +5,20 @@ import android.text.TextUtils;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
 import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
@@ -17,49 +30,89 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import water.retrofittest.App;
+import water.retrofittest.R;
 
 public class AppRetrofit {
+
+    private static volatile Retrofit retrofit;
 
     public static <T> T getNewsRetrofit(Class<T> clazz, String baseUrl) {
 
         if (TextUtils.isEmpty(baseUrl)) {
             throw new IllegalArgumentException("BaseUrl cannot be null");
         }
-//
 
-        /**
-         * 判断是否需要缓存数据,默认为false,可以用单利在每次请求之前设置值
-         */
-//        if (true){
-        if (true){
+       if (retrofit == null){
 
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl) //刚刚添加进来的请求头
-                    .client(getCacheOkHttpClient(App.getApplication()))  //使用缓存,Interceptor截获每次网络请求用于缓存数据
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  //添加Rxjava
+           synchronized (AppRetrofit.class){
 
-                    //添加Gson解析
-                    .addConverterFactory(GsonConverterFactory.create())
+               if (retrofit == null){
 
-                    .build();
-            return retrofit.create(clazz);
-        }else{
-            Retrofit retrofit = new Retrofit.Builder()
-                    .baseUrl(baseUrl)
-                    .client(getOKHttpClient())
-                    .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-                    //添加Gson解析
-                    .addConverterFactory(GsonConverterFactory.create())
 
-                    .build();
-            return retrofit.create(clazz);
-        }
+                   retrofit = new Retrofit.Builder()
+                           .baseUrl(baseUrl) //刚刚添加进来的请求头
+                           .client(getOkHttps())  //使用缓存,Interceptor截获每次网络请求用于缓存数据
+                           .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  //添加Rxjava
+                           .addConverterFactory(GsonConverterFactory.create())  //添加Gson解析
+                           .build();
+               }
+           }
+       }
+
+        return retrofit.create(clazz);
 
     }
 
+    /**
+     * 判断是否需要缓存,如果不需要调取getOKHttpClient()
+     * 如果需要调取getCacheOkHttpClient(context)
+     * @return
+     */
+    private static OkHttpClient getOkHttps() {
+        //设置不缓存
+        return getOKHttpClient();
+
+    }
+
+
+    /**
+     * 不使用缓存
+     * @return
+     */
     private static OkHttpClient getOKHttpClient(){
+
+        SSLSocketFactory sslSocketFactory = null;
+        try {
+            //读取文件weiai是自己服务器根据私钥生成的,替换成你自己的,这里我是随意写的一个,不可用哦,有兴趣看我博客
+            // http://blog.csdn.net/wei_ai_n/article/details/73645523
+            sslSocketFactory = getSSLSocketFactory_Certificate(App.getApplication(),"BKS", R.raw.weiai);
+        } catch (CertificateException e) {
+            e.printStackTrace();
+        } catch (KeyStoreException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (KeyManagementException e) {
+            e.printStackTrace();
+        }
+
+
+
         return new OkHttpClient.Builder()
-//                .connectTimeout(20000, TimeUnit.MILLISECONDS)
+                //添加请求头文件,选择性的
+//                .addInterceptor(new Interceptor() {
+//                    @Override
+//                    public Response intercept(Chain chain) throws IOException {
+//                        Request request = chain.request();
+//                        Request.Builder builder1 = request.newBuilder();
+//                        Request build = builder1.addHeader("Accept", "application/json, text/javascript, */*").build();
+//                        return chain.proceed(build);
+//                    }
+//                })
+                //设置Https请求
+//                .sslSocketFactory(sslSocketFactory)
                 .connectTimeout(10000, TimeUnit.SECONDS)
                 .writeTimeout(10000, TimeUnit.SECONDS)
                 .readTimeout(10000, TimeUnit.SECONDS)
@@ -67,6 +120,11 @@ public class AppRetrofit {
     }
 
 
+    /**
+     * 使用缓存
+     * @param context
+     * @return
+     */
     private static OkHttpClient getCacheOkHttpClient(final Context context){
         final File baseDir = context.getCacheDir();
         final File cacheDir = new File(baseDir, "HttpResponseCache");
@@ -117,6 +175,51 @@ public class AppRetrofit {
                 .readTimeout(10000, TimeUnit.SECONDS)
                 .build();
     }
+
+
+    private static SSLSocketFactory getSSLSocketFactory_Certificate(Context context, String keyStoreType, int keystoreResId)
+
+            throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, KeyManagementException
+
+    {
+
+        CertificateFactory cf = CertificateFactory.getInstance("X.509");
+
+        InputStream caInput = context.getResources().openRawResource(keystoreResId);
+
+        Certificate ca = cf.generateCertificate(caInput);
+
+        caInput.close();
+
+        if(keyStoreType ==null|| keyStoreType.length() ==0) {
+
+            keyStoreType = KeyStore.getDefaultType();
+
+        }
+
+        KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+
+        keyStore.load(null,null);
+
+        keyStore.setCertificateEntry("ca", ca);
+
+        String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+
+        TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+
+        tmf.init(keyStore);
+
+        TrustManager[] wrappedTrustManagers = MyTrustManager.getWrappedTrustManagers( tmf.getTrustManagers());
+//        TrustManager[] wrappedTrustManagers =TrustManager.getWrappedTrustManagers(tmf.getTrustManagers());
+
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+
+        sslContext.init(null, wrappedTrustManagers,null);
+
+        return sslContext.getSocketFactory();
+
+    }
+
 
 
 }

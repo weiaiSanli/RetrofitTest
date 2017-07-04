@@ -30,6 +30,6 @@ public abstract class UseCase {
         }
     }
 
-    protected abstract Observable buildUseCaseObservable();
+    public abstract Observable buildUseCaseObservable();
 
 }

@@ -20,4 +20,23 @@ public interface NetworkApi {
 
     @GET("delapp/userLogin.action")
     Observable<UpdateNetBean> updateNetCall(@QueryMap Map<String, String> map);
+
+
+    /**
+     * 带有token请求的
+     */
+    @GET("token")
+    Observable<String> tokenCall();
+
+
+    /**
+     * 需要token请求的
+     */
+
+    @GET("delapp/userLogin.action")
+    Observable<UpdateNetBean> needTokenCall(@QueryMap Map<String, String> map);
+
+
+
+
 }
