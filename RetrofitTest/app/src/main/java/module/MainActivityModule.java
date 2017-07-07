@@ -6,7 +6,7 @@ import dagger.Provides;
 import presenter.MainPresenter;
 
 /**
- * 类描述：
+ * 类描述：Main的mudole对P层注入
  * 创建人： 史强
  * 创建时间:2017/7/7 16:15
  */

@@ -10,7 +10,7 @@ import dagger.Provides;
 import utils.ToastUtil;
 
 /**
- * 类描述：
+ * 类描述：App的 module
  * 创建人： 史强
  * 创建时间:2017/7/6 14:53
  */
