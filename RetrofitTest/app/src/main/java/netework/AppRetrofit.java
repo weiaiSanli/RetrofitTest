@@ -81,7 +81,7 @@ public class AppRetrofit {
      */
     private static OkHttpClient getOKHttpClient(){
 
-        SSLSocketFactory sslSocketFactory = null;
+     /*   SSLSocketFactory sslSocketFactory = null;
         try {
             //读取文件weiai是自己服务器根据私钥生成的,替换成你自己的,这里我是随意写的一个,不可用哦,有兴趣看我博客
             // http://blog.csdn.net/wei_ai_n/article/details/73645523
@@ -96,7 +96,7 @@ public class AppRetrofit {
             e.printStackTrace();
         } catch (KeyManagementException e) {
             e.printStackTrace();
-        }
+        }*/
 
 
 

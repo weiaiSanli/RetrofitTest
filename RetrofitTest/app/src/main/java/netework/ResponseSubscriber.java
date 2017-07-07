@@ -16,6 +16,7 @@ public abstract class ResponseSubscriber<T> extends Subscriber<T> {
 
     @Override
     public void onNext(T t) {
+
             onSuccess(t);
 
     }

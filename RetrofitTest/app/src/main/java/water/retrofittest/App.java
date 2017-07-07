@@ -12,6 +12,10 @@ import android.os.Process;
 import java.io.File;
 import java.util.List;
 
+import components.AppComponent;
+import components.DaggerAppComponent;
+import module.AppModule;
+
 
 /**
  * Created by xiongmc on 2015/12/22.
@@ -27,6 +31,8 @@ public class App extends Application {
     private static Handler mMainThradHandler;
     // 获取到主线程的looper
     private static Looper mMainThradLooper;
+
+    private AppComponent appComponent;
 
     //用于网络请求是否缓存网络请求的数据
     public static boolean isChach = false;
@@ -52,6 +58,8 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         application = this;
+
+        appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
 
 
         SP = getSharedPreferences("config", MODE_PRIVATE);
@@ -79,7 +87,9 @@ public class App extends Application {
         return false;
     }
 
-
+    public AppComponent getAppComponent(){
+        return appComponent;
+    }
 
 
     //    public static CustomProgressDialog getDialog(Context context){

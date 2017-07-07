@@ -16,7 +16,7 @@ public class LoginUpdate extends UseCase {
     }
 
     @Override
-    protected Observable buildUseCaseObservable() {
+    public Observable buildUseCaseObservable() {
         return RetrofitServiceFactory.getAppService().updateNetCall(map);
     }
 }
