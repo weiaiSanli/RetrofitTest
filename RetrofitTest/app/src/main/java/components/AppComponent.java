@@ -7,6 +7,7 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 import module.AppModule;
+import retrofit2.Retrofit;
 import utils.ToastUtil;
 
 /**
@@ -20,5 +21,6 @@ public interface AppComponent {
 
     Context getContext();
     ToastUtil getToastUtil();
+    Retrofit getretrofit() ;
 
 }

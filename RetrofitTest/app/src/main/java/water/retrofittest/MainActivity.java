@@ -24,6 +24,7 @@ import netework.RetrofitServiceFactory;
 import netework.UpdateFractory;
 import netework.UseCase;
 import presenter.MainPresenter;
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -37,6 +38,9 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     private TextView tv;
     private Button bt;
 
+    @Inject
+    Retrofit retrofit ;
+
     @Override
     protected int getLayoutResourceId() {
         return R.layout.activity_main;
@@ -49,6 +53,8 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         bt = (Button) findViewById(R.id.bt_login);
 
         bt.setOnClickListener(this);
+
+
 
 
     }
@@ -164,6 +170,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
         presenter.loginNet();
 
+        System.out.println(retrofit.getClass().getName()+ "-------------");
 
 
     }

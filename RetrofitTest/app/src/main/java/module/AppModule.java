@@ -7,6 +7,9 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import utils.ToastUtil;
 
 /**
@@ -18,6 +21,7 @@ import utils.ToastUtil;
 public class AppModule {
 
      Context context;
+    private Retrofit retrofit;
 
     public AppModule(Context context){
         this.context = context;
@@ -33,6 +37,22 @@ public class AppModule {
     @Provides @Singleton
     public ToastUtil provideToastUtil(){
         return new ToastUtil(context);
+    }
+
+    @Provides @Singleton
+    public Retrofit provideRetrofit(){
+
+        //刚刚添加进来的请求头
+//                .client(getOkHttps())  //使用缓存,Interceptor截获每次网络请求用于缓存数据
+//添加Rxjava
+//添加Gson解析
+        retrofit = new Retrofit.Builder()
+                .baseUrl("http://dsn.ttkaifa.com/diaochan/") //刚刚添加进来的请求头
+//                .client(getOkHttps())  //使用缓存,Interceptor截获每次网络请求用于缓存数据
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  //添加Rxjava
+                .addConverterFactory(GsonConverterFactory.create())  //添加Gson解析
+                .build();
+        return retrofit;
     }
 
 //    @Provides @Singleton

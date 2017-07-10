@@ -4,6 +4,7 @@ import dagger.Component;
 import module.ActivityModule;
 import module.MainActivityModule;
 import module.PerActivity;
+import retrofit2.Retrofit;
 import water.retrofittest.MainActivity;
 
 /**
@@ -17,4 +18,5 @@ import water.retrofittest.MainActivity;
 @Component(dependencies = AppComponent.class ,  modules = {MainActivityModule.class , ActivityModule.class})
 public interface MainActivityComponent extends BaseActivityComponent{
     void inject(MainActivity activity);
+
 }

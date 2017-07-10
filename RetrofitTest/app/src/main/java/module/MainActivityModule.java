@@ -4,6 +4,8 @@ import contract.MainContract;
 import dagger.Module;
 import dagger.Provides;
 import presenter.MainPresenter;
+import retrofit2.Retrofit;
+import water.retrofittest.MainActivity;
 
 /**
  * 类描述：Main的mudole对P层注入
@@ -13,45 +15,43 @@ import presenter.MainPresenter;
 @Module
 public class MainActivityModule {
 
-    private final MainContract.View mView;
+    /*private final MainContract.View mView;
 
     public MainActivityModule(MainContract.View mView) {
 
         this.mView = mView;
     }
 
-    /**
+    *//**
      * 将其返回,相当与new Employeepresenter(mView)
      * @return
-     */
+     *//*
     @Provides
     MainContract.View provideMainPresenter(){
         return mView ;
     }
-
+*/
 
     //第二种方式提供Activity构造函数
 
-    /*
-    private LoginActivity activity ;
+    private MainActivity activity ;
 
-    public LoginActivityModule(LoginActivity activity) {
+    public MainActivityModule(MainActivity activity) {
         this.activity = activity;
     }
 
     @Provides
-    public LoginActivity provideActivity(){
+    public MainActivity provideActivity(){
         return activity ;
     }
 
     @Provides
-    public LoginPresenter provideLoginPresenter(){
+    public MainPresenter provideLoginPresenter(Retrofit retrofit){
 
-        return new LoginPresenter(activity);
+        return new MainPresenter(activity,retrofit);
 
     }
 
-    */
 
 
 

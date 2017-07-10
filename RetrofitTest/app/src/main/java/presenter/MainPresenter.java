@@ -11,6 +11,7 @@ import bean.UpdateNetBean;
 import contract.MainContract;
 import netework.ResponseSubscriber;
 import netework.UpdateFractory;
+import retrofit2.Retrofit;
 import utils.MyToast;
 import water.retrofittest.MainActivity;
 
@@ -25,24 +26,33 @@ public class MainPresenter implements MainContract.Presenter {
     private Map<String, String> map;
 
     private MainContract.View mView;
+    private Retrofit retrofit;
 
-    @Inject
+    public MainPresenter(MainActivity activity, Retrofit retrofit) {
+
+        this.mView = activity ;
+        this.retrofit = retrofit ;
+
+    }
+
+   /* @Inject
     MainPresenter( MainContract.View mIview) {
 
         this.mView = mIview ;
-    }
+    }*/
 
     @Override
     public void loginNet() {
-
+        System.out.println(retrofit.getClass().getName()+ "-------");
         map = new HashMap();
         map.put("userName" , mView.getUserName());
         map.put("passWord" , mView.getPassWord());
 
-        UpdateFractory.getBuild()
-                .map(map)
-                .name("updateNetCall")
-                .build()
+        new MainRetrofit(this.retrofit , map)
+//        UpdateFractory.getBuild()
+//                .map(map)
+//                .name("updateNetCall")
+//                .build()
                 .execute(new ResponseSubscriber<UpdateNetBean>() {
                     @Override
                     public void onFailure(Throwable e) {
