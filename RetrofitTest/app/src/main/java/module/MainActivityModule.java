@@ -28,4 +28,31 @@ public class MainActivityModule {
     MainContract.View provideMainPresenter(){
         return mView ;
     }
+
+
+    //第二种方式提供Activity构造函数
+
+    /*
+    private LoginActivity activity ;
+
+    public LoginActivityModule(LoginActivity activity) {
+        this.activity = activity;
+    }
+
+    @Provides
+    public LoginActivity provideActivity(){
+        return activity ;
+    }
+
+    @Provides
+    public LoginPresenter provideLoginPresenter(){
+
+        return new LoginPresenter(activity);
+
+    }
+
+    */
+
+
+
 }

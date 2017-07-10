@@ -98,7 +98,21 @@ public class LoginUpdate extends UseCase {
 
 ### 使用Dagger2
 
+* 学习网址
+
+  ```
+  http://blog.csdn.net/u012943767/article/details/51897247
+  http://www.jianshu.com/p/cd2c1c9f68d4
+  http://www.jianshu.com/p/39d1df6c877d (这哥们在P层封装写的比较不错) 
+  ```
+
 1. 新建一个mudole标明注解
+
+   ```
+
+   ```
+
+   ​
 
    ```
    /**
@@ -125,78 +139,74 @@ public class LoginUpdate extends UseCase {
            return mView ;
        }
    }
-
    ```
 
-   2. 创建注入器
+2. 创建注入器Component
 
-      ```
-      /**
-       * 类描述：创建Main的注入器
-       * PerActivity:设置注入器的生命周期
-       * dependencies:继承自AppComponent全局管理的Component
-       * ActivityModule是BaseActivity基类的Module
-       * 创建人： 史强
-       * 创建时间:2017/7/7 16:12
-       */
-      @PerActivity
-      @Component(dependencies = AppComponent.class ,  modules = {MainActivityModule.class , ActivityModule.class})
-      public interface MainActivityComponent extends BaseActivityComponent{
-          void inject(MainActivity activity);
+   ```
+   /**
+    * 类描述：创建Main的注入器
+    * PerActivity:设置注入器的生命周期
+    * dependencies:继承自AppComponent全局管理的Component
+    * ActivityModule是BaseActivity基类的Module
+    * 创建人： 史强
+    * 创建时间:2017/7/7 16:12
+    */
+   @PerActivity
+   @Component(dependencies = AppComponent.class ,  modules = {MainActivityModule.class , ActivityModule.class})
+   public interface MainActivityComponent extends BaseActivityComponent{
+       void inject(MainActivity activity);
+   }
+   ```
+
+3. 在MainPersenter中inject
+
+   ```
+   /**
+    * 类描述：使用inject将p引入到M
+    * 创建人： 史强
+    * 创建时间:2017/7/7 15:54
+    */
+   public class MainPresenter implements MainContract.Presenter {
+     private Map<String, String> map;
+     private MainContract.View mView;
+     //使用inject标注需要注入
+      @Inject
+      MainPresenter( MainContract.View mIview) {
+
+          this.mView = mIview ;
       }
+   }
+   ```
+
+4. 在Activity中注入MainPresenter
+
+   ```
+   @Inject
+      MainPresenter presenter ;   
+   ```
+
+
+   5. 使用Studio工具栏中的Build下的make Project自动生成所需要的DaggerMainActivityComponent管理类(使用过AIDL,Databinding的应该不会陌生)
+
+      ​
+
+   6. 重写BaseActivity的setupActivityComponent关联
+
+      ```
+       /**
+           * 第二种方式导入presenter
+           * 重写基类的setupActivityComponent()方法
+           */
+          @Override
+          protected void setupActivityComponent(AppComponent appComponent) {
+
+              DaggerMainActivityComponent.builder()
+                      .appComponent(appComponent)
+                      .mainActivityModule(new MainActivityModule(this))
+                      .activityModule(new ActivityModule(this)).build()
+                      .inject(this);
+          }
       ```
 
-      3. 在MainPersenter中inject
-
-         ```
-         /**
-          * 类描述：使用inject将p引入到M
-          * 创建人： 史强
-          * 创建时间:2017/7/7 15:54
-          */
-         public class MainPresenter implements MainContract.Presenter {
-
-
-             private Map<String, String> map;
-
-             private MainContract.View mView;
-
-         //使用inject标注需要注入
-             @Inject
-             MainPresenter( MainContract.View mIview) {
-
-                 this.mView = mIview ;
-             }
-          }
-         ```
-
-         4. 在Activity中注入MainPresenter
-
-            ```
-             @Inject
-             MainPresenter presenter ;
-            ```
-
-         5. 使用Studio工具栏中的Build下的make Project自动生成所需要的DaggerMainActivityComponent管理类(使用过AIDL,Databinding的应该不会陌生)
-
-            ​
-
-         6. 重写BaseActivity的setupActivityComponent关联
-
-            ```
-             /**
-                 * 第二种方式导入presenter
-                 * 重写基类的setupActivityComponent()方法
-                 */
-                @Override
-                protected void setupActivityComponent(AppComponent appComponent) {
-
-                    DaggerMainActivityComponent.builder()
-                            .appComponent(appComponent)
-                            .mainActivityModule(new MainActivityModule(this))
-                            .activityModule(new ActivityModule(this)).build()
-                            .inject(this);
-                }
-            ```
-
-            7. 运行程序即可
+   7. 运行程序即可
