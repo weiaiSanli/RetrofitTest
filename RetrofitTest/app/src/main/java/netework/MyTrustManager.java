@@ -7,8 +7,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * 类描述：
- * 创建人： 史强
+ * 类描述：X509TrustManage管理类
+ * 创建人： shi
  * 创建时间:2017/6/21 13:19
  */
 public class MyTrustManager implements TrustManager {

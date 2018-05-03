@@ -1,7 +1,7 @@
 package bean;
 
 /**
- * Created by shiqiang on 2017/2/23.
+ * Created by shi on 2017/2/23.
  */
 public class UpdateNetBean {
 

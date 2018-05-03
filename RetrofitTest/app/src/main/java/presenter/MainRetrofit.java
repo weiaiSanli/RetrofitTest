@@ -9,7 +9,7 @@ import utils.NetworkApi;
 
 /**
  * 类描述：
- * 创建人： 史强
+ * 创建人： shi
  * 创建时间:2017/7/10 17:09
  */
 public class MainRetrofit extends UseCase {

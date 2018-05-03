@@ -10,7 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import components.AppComponent;
 
 /**
- * Created by shiqiang on 2017/3/23.
+ * Created by shi on 2017/3/23.
  */
 
 public abstract class BaseActivity extends AppCompatActivity {

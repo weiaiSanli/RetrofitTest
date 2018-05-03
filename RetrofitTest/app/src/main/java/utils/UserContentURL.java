@@ -1,7 +1,7 @@
 package utils;
 
 /**
- * Created by shiqiang on 2017/3/14.
+ * Created by shi on 2017/3/14.
  */
 public interface UserContentURL {
 

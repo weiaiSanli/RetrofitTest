@@ -1,12 +1,14 @@
 package contract;
 
 /**
- * 类描述：使用MVPHelper插件自动生成的
- * 创建人： shi
- * 创建时间:2017/7/7 15:54
+ * description:
+ * Creat by shiqiang on 2018/5/3 0003 10:37
  */
-public interface MainContract {
-    interface Model {
+
+public interface SecondContract {
+    interface Model <T>{
+
+        void loginNet(String userName , String pwd , T t);
     }
 
     interface View {

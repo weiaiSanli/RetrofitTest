@@ -9,7 +9,7 @@ import water.retrofittest.MainActivity;
 
 /**
  * 类描述：Main的mudole对P层注入
- * 创建人： 史强
+ * 创建人： shi
  * 创建时间:2017/7/7 16:15
  */
 @Module
@@ -34,21 +34,21 @@ public class MainActivityModule {
 
     //第二种方式提供Activity构造函数
 
-    private MainActivity activity ;
+    private MainContract.View mView ;
 
-    public MainActivityModule(MainActivity activity) {
-        this.activity = activity;
+    public MainActivityModule(MainContract.View mView) {
+        this.mView = mView;
     }
 
     @Provides
-    public MainActivity provideActivity(){
-        return activity ;
+    public MainContract.View provideActivity(){
+        return mView ;
     }
 
     @Provides
     public MainPresenter provideLoginPresenter(Retrofit retrofit){
 
-        return new MainPresenter(activity,retrofit);
+        return new MainPresenter(mView,retrofit);
 
     }
 

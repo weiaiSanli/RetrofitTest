@@ -4,8 +4,9 @@ import dagger.Component;
 import module.ActivityModule;
 import module.MainActivityModule;
 import module.PerActivity;
-import retrofit2.Retrofit;
+import module.SecondActivityModule;
 import water.retrofittest.MainActivity;
+import water.retrofittest.SecondMvpActivity;
 
 /**
  * 类描述：创建Main的注入器
@@ -15,8 +16,8 @@ import water.retrofittest.MainActivity;
  * 创建时间:2017/7/7 16:12
  */
 @PerActivity
-@Component(dependencies = AppComponent.class ,  modules = {MainActivityModule.class , ActivityModule.class})
-public interface MainActivityComponent extends BaseActivityComponent{
-    void inject(MainActivity activity);
+@Component(dependencies = AppComponent.class ,  modules = {SecondActivityModule.class , ActivityModule.class})
+public interface SecondActivityComponent extends BaseActivityComponent{
+    void inject(SecondMvpActivity activity);
 
 }

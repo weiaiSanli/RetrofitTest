@@ -6,7 +6,7 @@ import rx.Observable;
 import utils.NetworkApi;
 
 /**
- * Created by shiqiang on 2017/4/26.
+ * Created by shi on 2017/4/26.
  */
 
 public class UpdateFractory extends UseCase{

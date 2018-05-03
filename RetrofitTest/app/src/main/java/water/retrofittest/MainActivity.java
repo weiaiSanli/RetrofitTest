@@ -1,45 +1,30 @@
 package water.retrofittest;
 
-import android.os.Bundle;
-import android.support.v4.util.ArrayMap;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.inject.Inject;
 
-import bean.UpdateNetBean;
 import components.AppComponent;
 import components.DaggerMainActivityComponent;
 import contract.MainContract;
 import module.ActivityModule;
 import module.MainActivityModule;
-import netework.LoginUpdate;
-import netework.ResponseSubscriber;
-import netework.RetrofitServiceFactory;
-import netework.UpdateFractory;
-import netework.UseCase;
 import presenter.MainPresenter;
 import retrofit2.Retrofit;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import utils.MyToast;
 
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
 
 
     @Inject
-    MainPresenter presenter ;
+    MainPresenter presenter;
     private TextView tv;
-    private Button bt;
+    private Button btLogin;
+    private Button btNext;
 
     @Inject
-    Retrofit retrofit ;
+    Retrofit retrofit;
 
     @Override
     protected int getLayoutResourceId() {
@@ -50,11 +35,10 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     protected void initView() {
 
         tv = (TextView) findViewById(R.id.tv_end);
-        bt = (Button) findViewById(R.id.bt_login);
-
-        bt.setOnClickListener(this);
-
-
+        btLogin = (Button) findViewById(R.id.bt_login);
+        btNext = (Button) findViewById(R.id.bt_nex);
+        btLogin.setOnClickListener(this);
+        btNext.setOnClickListener(this);
 
 
     }
@@ -74,8 +58,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     }
 
 
-
-
     @Override
     protected void initData() {
         /**
@@ -88,10 +70,7 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
                 .inject(this);*/
 
 
-
     }
-
-
 
 
     /**
@@ -168,10 +147,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     @Override
     public void onClick(View v) {
 
-        presenter.loginNet();
+        switch (v.getId()){
+            case R.id.bt_login:
+                presenter.loginNet();
+                break;
 
-        System.out.println(retrofit.getClass().getName()+ "-------------");
+            case R.id.bt_nex:
+                startActivity(SecondMvpActivity.class);
+                break;
+        }
 
-
+        System.out.println(retrofit.getClass().getName() + "-------------");
     }
 }

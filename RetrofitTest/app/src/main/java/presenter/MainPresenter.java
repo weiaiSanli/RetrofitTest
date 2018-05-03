@@ -17,7 +17,7 @@ import water.retrofittest.MainActivity;
 
 /**
  * 类描述：使用inject将p引入到M
- * 创建人： 史强
+ * 创建人： shi
  * 创建时间:2017/7/7 15:54
  */
 public class MainPresenter implements MainContract.Presenter {
@@ -28,9 +28,9 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mView;
     private Retrofit retrofit;
 
-    public MainPresenter(MainActivity activity, Retrofit retrofit) {
+    public MainPresenter(MainContract.View mView, Retrofit retrofit) {
 
-        this.mView = activity ;
+        this.mView = mView ;
         this.retrofit = retrofit ;
 
     }

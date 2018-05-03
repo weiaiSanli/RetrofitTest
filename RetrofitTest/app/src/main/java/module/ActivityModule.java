@@ -7,7 +7,7 @@ import dagger.Provides;
 
 /**
  * 类描述：提供baseactivity的module
- * 创建人： shiqiang
+ * 创建人： shi
  * 创建时间:2017/7/6 14:57
  */
 @Module

@@ -26,6 +26,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -99,9 +100,20 @@ public class AppRetrofit {
         }*/
 
 
+        //添加日志的缓存
+     /*   HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+            @Override
+            public void log(String message) {
+                //打印retrofit日志
+                Logger.e("retrofitBack = "+message);
+            }
+        });*/
+
+
 
         return new OkHttpClient.Builder()
                 //添加请求头文件,选择性的
+//                .addInterceptor(loggingInterceptor) //打印返回数据
 //                .addInterceptor(new Interceptor() {
 //                    @Override
 //                    public Response intercept(Chain chain) throws IOException {
@@ -177,6 +189,18 @@ public class AppRetrofit {
     }
 
 
+    /**
+     * 设置Https请求
+     * @param context
+     * @param keyStoreType
+     * @param keystoreResId
+     * @return
+     * @throws CertificateException
+     * @throws KeyStoreException
+     * @throws IOException
+     * @throws NoSuchAlgorithmException
+     * @throws KeyManagementException
+     */
     private static SSLSocketFactory getSSLSocketFactory_Certificate(Context context, String keyStoreType, int keystoreResId)
 
             throws CertificateException, KeyStoreException, IOException, NoSuchAlgorithmException, KeyManagementException

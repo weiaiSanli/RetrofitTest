@@ -3,7 +3,10 @@ package utils;
 import java.util.Map;
 
 import bean.UpdateNetBean;
+import retrofit2.http.FieldMap;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.QueryMap;
 import rx.Observable;
 
@@ -36,6 +39,15 @@ public interface NetworkApi {
     @GET("delapp/userLogin.action")
     Observable<UpdateNetBean> needTokenCall(@QueryMap Map<String, String> map);
 
+
+    /**
+     * post请求时候使用
+     */
+
+    @FormUrlEncoded
+    @POST("goods/bids")
+    Observable<UpdateNetBean> oneSingleBidCall(
+            @FieldMap Map<String, String> map);
 
 
 

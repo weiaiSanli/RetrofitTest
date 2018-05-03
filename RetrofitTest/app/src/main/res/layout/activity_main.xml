@@ -23,4 +23,12 @@
         android:padding="10dp"
         android:text="点击登录"
         />
+
+    <Button
+        android:id="@+id/bt_nex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="跳转到第二个界面"
+        />
 </LinearLayout>
