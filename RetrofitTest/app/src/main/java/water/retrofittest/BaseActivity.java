@@ -4,10 +4,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 
 
 import components.AppComponent;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
+import utils.MyToast;
 
 /**
  * Created by shi on 2017/3/23.
@@ -89,6 +95,42 @@ public abstract class BaseActivity extends AppCompatActivity {
      */
     protected abstract void initData();
 
+    /**
+     * 切换线程,使其在子线程中也能执行,有时候不注意在子线程中调取弹出toast的方法了
+     * @param toast
+     */
+    protected void showToast(String toast){
+
+        Observable.just(toast)
+                .filter(new Func1<String, Boolean>() {
+                    @Override
+                    public Boolean call(String toast) {
+                        boolean onMainThread = isOnMainThread();
+                        //如果当前是主线程,直接弹出toast,并且不再向下执行了
+                        if (onMainThread){
+                            MyToast.show(mContext , toast);
+                        }
+                        return !onMainThread;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String toast) {
+                        MyToast.show(mContext , toast);
+                    }
+                });
+
+    }
+
+
+    /**
+     * 判断是否在当前主线程
+     * @return
+     */
+    public boolean isOnMainThread(){
+        return Thread.currentThread() == Looper.getMainLooper().getThread();
+    }
 
 
     @Override
