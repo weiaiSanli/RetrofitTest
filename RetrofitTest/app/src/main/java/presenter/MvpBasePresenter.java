@@ -20,5 +20,4 @@ public abstract class MvpBasePresenter<V,T> extends BasePresenter<V> {
         super.detachView();
         this.mvpView = null;
     }
-
 }

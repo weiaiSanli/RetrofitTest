@@ -7,7 +7,7 @@ import dagger.Provides;
 import model.SecondModel;
 
 /**
- * description:
+ * description:创建view层,跟modeld的注解,直接在presenter中根据注解得到实例对象
  * Creat by shiqiang on 2018/5/3 0003 10:34
  */
 @Module
@@ -25,9 +25,7 @@ public class SecondActivityModule  {
     }
 
     @Provides
-    SecondContract.Model getSecondModel() {
+    public SecondContract.Model getSecondModel() {
         return new SecondModel();
     }
-
-
 }
