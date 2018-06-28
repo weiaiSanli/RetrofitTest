@@ -8,12 +8,15 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 
 
+import javax.inject.Inject;
+
 import components.AppComponent;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.functions.Func1;
 import utils.MyToast;
+import utils.ToastUtil;
 
 /**
  * Created by shi on 2017/3/23.
@@ -25,7 +28,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected Context mContext ;
 
-    private int layoutResourceId;
+
 
 
     //两者方式关联App里面的唯一Component管理类,这是第一种,下面是第二种方式,在子类中重写setupActivityComponent()即可
@@ -36,7 +39,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //这是第二种
+        //这是第二种:获取App中的component注入器即可使用context,Retrofit等全局对象
         setupActivityComponent(((App)getApplication()).getAppComponent());
         mContext = this;
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -54,7 +57,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     }
 
-    protected void setupActivityComponent(AppComponent appComponent){};
+
+
+    protected void setupActivityComponent(AppComponent appComponent){}
 
     /**
      * 获取资源布局id
@@ -136,7 +141,6 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
 

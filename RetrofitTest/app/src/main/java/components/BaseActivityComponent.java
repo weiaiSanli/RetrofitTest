@@ -6,6 +6,7 @@ import android.app.Activity;
 import dagger.Component;
 import module.ActivityModule;
 import module.PerActivity;
+import utils.ToastUtil;
 
 /**
  * 类描述：基类的注入器

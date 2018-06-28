@@ -12,6 +12,8 @@ import utils.ToastUtil;
 
 /**
  * 类描述：创建单例的将AppModule注入到App里面
+ * Component也是一个注解类，一个类要想是Component，必须用Component注解来标注该类，并且该类是接口或抽象类
+ *
  * 创建人： shi
  * 创建时间:2017/7/6 15:03
  */

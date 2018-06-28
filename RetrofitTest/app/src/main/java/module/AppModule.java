@@ -13,14 +13,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import utils.ToastUtil;
 
 /**
- * 类描述：App的 module
+ * 类描述：App的 module:用Singleton标记全局的单例模式.在app里面引入
  * 创建人： shi
  * 创建时间:2017/7/6 14:53
  */
 @Module
 public class AppModule {
 
-     Context context;
+    private Context context;
     private Retrofit retrofit;
 
     public AppModule(Context context){

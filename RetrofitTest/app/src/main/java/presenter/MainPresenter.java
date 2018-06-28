@@ -31,19 +31,14 @@ public class MainPresenter implements MainContract.Presenter {
     public MainPresenter(MainContract.View mView, Retrofit retrofit) {
 
         this.mView = mView ;
-        this.retrofit = retrofit ;
+        this.retrofit = retrofit;
 
     }
 
-   /* @Inject
-    MainPresenter( MainContract.View mIview) {
-
-        this.mView = mIview ;
-    }*/
 
     @Override
     public void loginNet() {
-        System.out.println(retrofit.getClass().getName()+ "-------");
+        System.out.println("MainPresenter中的Retrofit地址为:" + retrofit.toString());
         map = new HashMap();
         map.put("userName" , mView.getUserName());
         map.put("passWord" , mView.getPassWord());
@@ -58,7 +53,6 @@ public class MainPresenter implements MainContract.Presenter {
                     public void onFailure(Throwable e) {
 
                         e.printStackTrace();
-                        System.out.println("服务器繁忙,请稍后重试");
                         mView.error("服务器繁忙,请稍后重试");
                     }
 
@@ -71,7 +65,6 @@ public class MainPresenter implements MainContract.Presenter {
                         }else{
                             mView.error("商户号或密码错误");
                         }
-
                     }
                 });
 

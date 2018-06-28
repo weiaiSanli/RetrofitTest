@@ -4,6 +4,7 @@ import android.app.Activity;
 
 import dagger.Module;
 import dagger.Provides;
+import utils.ToastUtil;
 
 /**
  * 类描述：提供baseactivity的module
@@ -21,9 +22,8 @@ public class ActivityModule {
     @Provides
     @PerActivity
     public Activity provideActivity(){
+
         return activity;
     }
-
-
 
 }

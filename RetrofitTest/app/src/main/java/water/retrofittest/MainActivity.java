@@ -13,18 +13,34 @@ import module.ActivityModule;
 import module.MainActivityModule;
 import presenter.MainPresenter;
 import retrofit2.Retrofit;
+import utils.ToastUtil;
+
+/**注意: Component会首先从Module维度中查找类实例，若找到就用Module维度创建类实例，并停止查找Inject维度。
+ * 否则才是从Inject维度查找类实例。所以创建类实例级别Module维度要高于Inject维度。
+ *
+ * description:第一种引入的方式,在module中有SecondPresenter实例的引用,不在找寻inject,
+ * 所以presenter为MainActivityModule中provideLoginPresenter()返回的对象
+ * Creat by shi on 2018/5/3 0003 10:30
+ */
+
 
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
 
-
+    //注解(Annotation)来标注目标类中所依赖的其他类，同样用注解来标注所依赖的其他类的构造函数，那注解的名字就叫Inject
     @Inject
-    MainPresenter presenter;
+    MainPresenter presenter; //使用了Inject会先去module中找寻返回MainPresenter的对象
     private TextView tv;
     private Button btLogin;
     private Button btNext;
 
     @Inject
-    Retrofit retrofit;
+    Retrofit retrofit; //都是AppModule中初始化的retrofit对象,注入器依赖都能使用依赖类中的对象
+
+
+    @Inject
+    ToastUtil toastUtil; //在AppComponent中已经定义过,而且MainActivityComponent依赖了AppComponent,相当于父类中的实例都可以直接使用
+
+
 
     @Override
     protected int getLayoutResourceId() {
@@ -69,6 +85,14 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
                 .activityModule(new ActivityModule(this)).build()
                 .inject(this);*/
 
+        toastUtil.showToast("我是谁?");
+        System.out.println("MainActivity中的Retrofit地址为:" + retrofit.toString());
+
+        /**
+         * 当前打印的结果为:同一个对象地址:
+         * System.out: MainActivity中的Retrofit地址为:retrofit2.Retrofit@e8da350
+         * System.out: MainPresenter中的Retrofit地址为:retrofit2.Retrofit@e8da350
+         */
 
     }
 
@@ -133,14 +157,11 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     public void loginSuccess(String success) {
-
-        System.out.println(success + "caicai");
         tv.setText(success);
     }
 
     @Override
     public void error(String error) {
-        System.out.println(error + "caicai");
         tv.setText(error);
     }
 
@@ -156,7 +177,5 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
                 startActivity(SecondMvpActivity.class);
                 break;
         }
-
-        System.out.println(retrofit.getClass().getName() + "-------------");
     }
 }
