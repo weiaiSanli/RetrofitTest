@@ -7,6 +7,7 @@ import dagger.Provides;
 import model.FourthModel;
 import model.SecondModel;
 import presenter.FourthPresenter;
+import utils.ResultCallBack;
 
 /**
  * description:创建view层,跟modeld的注解,直接在presenter中根据注解得到实例对象
