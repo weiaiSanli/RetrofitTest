@@ -2,6 +2,8 @@
 
 # RetrofitTest
 
+**增加了对kotlin的引用新分支kotlin_test**
+
 user Retrofit request network 
 
 <font color=#00ffff size=12> 注意: </font> 
