@@ -7,6 +7,7 @@ import dagger.Component;
 import module.ActivityModule;
 import module.PerActivity;
 import utils.ToastUtil;
+import water.retrofittest.BaseActivity;
 
 /**
  * 类描述：基类的注入器

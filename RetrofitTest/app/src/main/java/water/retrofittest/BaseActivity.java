@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import components.AppComponent;
+import components.DaggerBaseActivityComponent;
+import module.ActivityModule;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;

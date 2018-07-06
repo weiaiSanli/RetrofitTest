@@ -1,5 +1,7 @@
 package contract;
 
+import javax.inject.Inject;
+
 public interface FourthContract {
     interface Model <T>{
 
@@ -16,6 +18,7 @@ public interface FourthContract {
     }
 
     interface Presenter {
+
         //登录联网
         void loginNet();
     }

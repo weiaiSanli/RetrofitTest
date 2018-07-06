@@ -21,7 +21,7 @@ import utils.ToastUtil;
 @Component(modules = AppModule.class)
 public interface AppComponent {
 
-    Context getContext();
+    Context getContext(); //提供一个接口,供其他依赖AppComponent的注入器使用AppModule中的对象实例
     ToastUtil getToastUtil();
     Retrofit getretrofit() ;
 

@@ -12,6 +12,7 @@ import presenter.FourthPresenter;
  * description:创建view层,跟modeld的注解,直接在presenter中根据注解得到实例对象
  * Creat by shiqiang on 2018/5/3 0003 10:34
  */
+//@PerActivity
 @Module
 public class FourthActivityModule {
 
@@ -31,6 +32,18 @@ public class FourthActivityModule {
     public FourthContract.Model provideModel(){
         return new FourthModel();
     }
+
+    @Named("presenter")
+    @Provides
+    public FourthPresenter providePresenter(FourthContract.Model model){
+        return new FourthPresenter(this.mView , model);
+    }
+
+//    @Named("presenter2")
+//    @Provides
+//    public FourthPresenter providePresenter2(){
+//        return new FourthPresenter("nidaye");
+//    }
 
 
 }

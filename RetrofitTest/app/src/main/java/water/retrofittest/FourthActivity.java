@@ -1,5 +1,7 @@
 package water.retrofittest;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -12,14 +14,27 @@ import components.DaggerFourthActivityComponent;
 import contract.FourthContract;
 import module.ActivityModule;
 import module.FourthActivityModule;
+import module.Named;
 import presenter.FourthPresenter;
 
 public class FourthActivity extends BaseActivity implements FourthContract.View, View.OnClickListener {
 
     @Inject
+    @Named("presenter")
     FourthPresenter presenter;
+
+//    @Inject
+//    @Named("presenter2")
+//    FourthPresenter presenter2;
+
+
     private TextView tv;
     private Button bt;
+
+    @Inject
+    Activity activity ; //公共的activity,得到的对象就是当前的FourthActivity
+    @Inject
+    Context context ;
 
     @Override
     protected int getLayoutResourceId() {
@@ -80,6 +95,8 @@ public class FourthActivity extends BaseActivity implements FourthContract.View,
 
     @Override
     public void onClick(View v) {
+
+        System.out.println("我是当前的activity" + activity.getClass().getName() + "context:" + context.getPackageName());
 
         presenter.loginNet();
     }
