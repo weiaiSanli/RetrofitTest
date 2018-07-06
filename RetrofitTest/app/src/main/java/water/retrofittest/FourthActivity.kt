@@ -12,6 +12,7 @@ import module.Named
 import presenter.FourthPresenter
 import utils.Constant
 import javax.inject.Inject
+import org.jetbrains.anko.find
 
 /**
  * created by shi on 2018/7/6/006
@@ -55,8 +56,8 @@ class FourthActivity : BaseActivity() , FourthContract.View, View.OnClickListene
 
     override fun initView() {
 
-        tv =  find(R.id.tv_end)
-        bt = find(R.id.bt_login)
+        tv =  find (R.id.tv_end)
+        bt = find (R.id.bt_login)
         bt.setOnClickListener(this)
 
     }

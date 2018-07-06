@@ -1,10 +1,13 @@
 package module;
 
+import org.jetbrains.annotations.NotNull;
+
 import contract.MainContract;
 import contract.SecondContract;
 import dagger.Module;
 import dagger.Provides;
 import model.SecondModel;
+import utils.ResultCallBack;
 
 /**
  * description:创建view层,跟modeld的注解,直接在presenter中根据注解得到实例对象
@@ -18,6 +21,8 @@ public class SecondActivityModule  {
     public SecondActivityModule(SecondContract.View mView) {
         this.mView = mView;
     }
+
+
 
     @Provides
     public SecondContract.View provideActivity(){
