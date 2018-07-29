@@ -5,7 +5,11 @@ buildscript {
     ext.anko_version = '0.10.4'
     repositories {
         jcenter()
-        google()
+//        google()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.0'
@@ -21,6 +25,10 @@ allprojects {
     repositories {
         jcenter()
         google()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
     }
 }
 
