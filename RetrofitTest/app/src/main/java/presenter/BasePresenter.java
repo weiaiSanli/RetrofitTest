@@ -6,6 +6,8 @@ public class BasePresenter<V> {
 
     public void attachView(V mvpView) {
         this.mvpView = mvpView ;
+
+
     }
 
     public void detachView() {

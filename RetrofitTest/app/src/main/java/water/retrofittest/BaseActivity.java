@@ -1,5 +1,6 @@
 package water.retrofittest;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import javax.inject.Inject;
 
 import components.AppComponent;
+import components.DaggerBaseActivityComponent;
+import module.ActivityModule;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -19,6 +22,7 @@ import utils.MyToast;
 import utils.ToastUtil;
 
 /**
+ * 基类
  * Created by shi on 2017/3/23.
  */
 
@@ -26,7 +30,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
 
-    protected Context mContext ;
+    private Context mContext;
+    @Inject
+    Activity activity ;
+
 
 
 
@@ -42,6 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         //这是第二种:获取App中的component注入器即可使用context,Retrofit等全局对象
         setupActivityComponent(((App)getApplication()).getAppComponent());
         mContext = this;
+        DaggerBaseActivityComponent.builder().activityModule(new ActivityModule(this))
+                .build();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getLayoutResourceId());
 
@@ -59,7 +68,10 @@ public abstract class BaseActivity extends AppCompatActivity {
 
 
 
-    protected void setupActivityComponent(AppComponent appComponent){}
+    protected void setupActivityComponent(AppComponent appComponent){
+
+
+    }
 
     /**
      * 获取资源布局id

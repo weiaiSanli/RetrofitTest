@@ -1,5 +1,6 @@
 package presenter;
 
+import android.util.AndroidException;
 import android.util.ArrayMap;
 
 import java.util.HashMap;
@@ -12,7 +13,11 @@ import contract.MainContract;
 import netework.ResponseSubscriber;
 import netework.UpdateFractory;
 import retrofit2.Retrofit;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import utils.MyToast;
+import utils.NetworkApi;
 import water.retrofittest.MainActivity;
 
 /**
@@ -38,17 +43,15 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void loginNet() {
-        System.out.println("MainPresenter中的Retrofit地址为:" + retrofit.toString());
+
         map = new HashMap();
         map.put("userName" , mView.getUserName());
-        map.put("passWord" , mView.getPassWord());
-
-        new MainRetrofit(this.retrofit , map)
-//        UpdateFractory.getBuild()
-//                .map(map)
-//                .name("updateNetCall")
-//                .build()
-                .execute(new ResponseSubscriber<UpdateNetBean>() {
+        map.put("passWord" , mView.getUserName());
+        System.out.println("MainPresenter中的Retrofit地址为:" + retrofit.toString() + mView.getUserName() + mView.getPassWord());
+//        new MainRetrofit(this.retrofit , map)
+        retrofit.create(NetworkApi.class).updateNetCall(map).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new ResponseSubscriber<UpdateNetBean>() {
                     @Override
                     public void onFailure(Throwable e) {
 

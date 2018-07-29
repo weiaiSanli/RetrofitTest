@@ -101,19 +101,20 @@ public class AppRetrofit {
 
 
         //添加日志的缓存
-     /*   HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
                 //打印retrofit日志
-                Logger.e("retrofitBack = "+message);
+//                Logger.e("retrofitBack = "+message);
+                System.out.println("当前网络为: " + message);
             }
-        });*/
+        });
 
 
 
         return new OkHttpClient.Builder()
                 //添加请求头文件,选择性的
-//                .addInterceptor(loggingInterceptor) //打印返回数据
+                .addInterceptor(loggingInterceptor) //打印返回数据
 //                .addInterceptor(new Interceptor() {
 //                    @Override
 //                    public Response intercept(Chain chain) throws IOException {

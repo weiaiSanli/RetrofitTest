@@ -13,7 +13,6 @@ public class FourthPresenter implements FourthContract.Presenter {
     @Inject
     public FourthPresenter(FourthContract.View mView) {
         this.mView = mView;
-
     }
 
     @Override

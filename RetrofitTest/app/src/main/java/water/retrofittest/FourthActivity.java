@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import javax.inject.Inject;
 
@@ -51,6 +52,9 @@ public class FourthActivity extends BaseActivity implements FourthContract.View,
 
     @Override
     protected void initData() {
+
+
+        Toast.makeText(activity, "this is FourthActivity" + activity.getLocalClassName(), Toast.LENGTH_SHORT).show();
 
     }
 
