@@ -40,6 +40,7 @@ public class SecondModel implements SecondContract.Model<LoginNetInfo> {
 
                         int infoCode = updateNetBean.getInfoCode();
                         if (infoCode == 200){
+                            System.out.println("登录成功......");
                             info.loginNetSuccess("登录成功");
                         }else{
                             info.loginNetError("商户号或密码错误");

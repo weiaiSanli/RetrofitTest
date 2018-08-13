@@ -17,7 +17,6 @@ public class App extends Application {
         super.onCreate();
         //导入AppComponent注入器:此为全局的,每个界面分别依赖appComponent即可使用AppModule中的全局单例模式
         appComponent = DaggerAppComponent.builder().appModule(new AppModule(getApplicationContext())).build();
-
     }
 
     public AppComponent getAppComponent(){

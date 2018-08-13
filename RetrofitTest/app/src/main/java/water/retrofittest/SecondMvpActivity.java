@@ -13,6 +13,7 @@ import contract.SecondContract;
 import module.ActivityModule;
 import module.SecondActivityModule;
 import presenter.SecondPresenter;
+import utils.UserContentURL;
 
 /**注意: Component会首先从Module维度中查找类实例，若找到就用Module维度创建类实例，并停止查找Inject维度。
  * 否则才是从Inject维度查找类实例。所以创建类实例级别Module维度要高于Inject维度。
@@ -30,7 +31,6 @@ public class SecondMvpActivity extends BaseActivity implements SecondContract.Vi
     private String TAG = "SecondMvpActivity" ;
     private TextView tv;
     private Button bt;
-
 
     @Override
     protected int getLayoutResourceId() {
@@ -56,7 +56,6 @@ public class SecondMvpActivity extends BaseActivity implements SecondContract.Vi
      */
     @Override
     protected void setupActivityComponent(AppComponent appComponent) {
-
         DaggerSecondActivityComponent.builder()
                 .appComponent(appComponent)
                 .secondActivityModule(new SecondActivityModule(this))
@@ -68,13 +67,14 @@ public class SecondMvpActivity extends BaseActivity implements SecondContract.Vi
 
     @Override
     public String getUserName() {
-        return "xingfushuizhan";
+        return UserContentURL.userName;
     }
 
     @Override
     public String getPassWord() {
-        return "123456";
+        return UserContentURL.passWord;
     }
+
 
     @Override
     public void loginSuccess(String success) {
@@ -95,4 +95,5 @@ public class SecondMvpActivity extends BaseActivity implements SecondContract.Vi
 
         presenter.loginNet();
     }
+
 }

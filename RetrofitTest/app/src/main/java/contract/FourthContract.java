@@ -1,9 +1,11 @@
 package contract;
 
-public interface FourthContract {
-    interface Model <T>{
+import info.LoginNetInfo;
 
-        void loginNet(String userName , String pwd , T t);
+public interface FourthContract {
+    interface Model {
+
+        void loginNet(String userName , String pwd , LoginNetInfo loginNetInfo);
     }
 
     interface View {

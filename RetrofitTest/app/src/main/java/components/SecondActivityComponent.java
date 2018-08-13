@@ -16,7 +16,7 @@ import water.retrofittest.SecondMvpActivity;
  * 创建时间:2017/7/7 16:12
  */
 @PerActivity
-@Component(dependencies = AppComponent.class ,  modules = {SecondActivityModule.class , ActivityModule.class})
+@Component(dependencies = AppComponent.class , modules = {SecondActivityModule.class , ActivityModule.class})
 public interface SecondActivityComponent extends BaseActivityComponent{
     void inject(SecondMvpActivity activity);
 

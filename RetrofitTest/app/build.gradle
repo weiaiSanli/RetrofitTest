@@ -1,13 +1,11 @@
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "24.0.3"
+    compileSdkVersion rootProject.ext.compileSdkVersion
     defaultConfig {
         applicationId "water.retrofittest"
-        minSdkVersion 15
-        targetSdkVersion 25
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -17,7 +15,7 @@ android {
     }
 
     dexOptions {
-        incremental true
+//        incremental true
         javaMaxHeapSize "4g"
     }
     buildTypes {
@@ -29,27 +27,30 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    testCompile 'junit:junit:4.12'
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation "com.android.support:design:$rootProject.supportLibraryVersion"
+    implementation "com.android.support:support-vector-drawable:$rootProject.supportLibraryVersion"
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //retrofit的使用
-    compile 'com.squareup.retrofit2:retrofit:2.0.1'
-    compile 'io.reactivex:rxjava:1.0.14'
-    compile 'com.squareup.retrofit2:converter-gson:2.0.1'
-    compile 'com.squareup.okhttp3:logging-interceptor:3.1.2'
-    compile 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
-    compile 'io.reactivex:rxandroid:1.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.0.1'
+    implementation 'io.reactivex:rxjava:1.0.14'
+    implementation 'com.squareup.retrofit2:converter-gson:2.0.1'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.1.2'
+    implementation 'com.squareup.retrofit2:adapter-rxjava:2.0.1'
+    implementation 'io.reactivex:rxandroid:1.1.0'
 
     //Dagger2的使用
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-    compile 'com.google.dagger:dagger:2.5'
-    compile 'com.google.dagger:dagger-compiler:2.5'
+    implementation "com.google.dagger:dagger:2.14.1"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.14.1"
+    //方法数最大65K限制
+    implementation 'com.android.support:multidex:1.0.0'
 
-    compile 'com.android.support:multidex:1.0.0'
+    //Lifecycle
+    implementation "android.arch.lifecycle:runtime:1.0.3"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
 
 }

@@ -8,6 +8,10 @@ public interface ThreeActivityContract {
     interface Model <T>{
 
         void loginNet(String userName , String pwd , T t);
+
+        void loginInterverNet();
+
+        void onDestroy();
     }
 
     interface View extends BaseMvpView{
@@ -21,5 +25,7 @@ public interface ThreeActivityContract {
     interface Presenter {
         //登录联网
         void loginNet();
+
+        void loginInterverNet();
     }
 }

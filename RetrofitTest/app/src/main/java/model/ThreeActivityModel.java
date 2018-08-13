@@ -8,8 +8,14 @@ import contract.ThreeActivityContract;
 import info.LoginNetInfo;
 import netework.ResponseSubscriber;
 import netework.UpdateFractory;
+import rx.Observable;
+import rx.Subscription;
+import rx.functions.Action1;
 
 public class ThreeActivityModel implements ThreeActivityContract.Model<LoginNetInfo> {
+
+
+    private Subscription subscribe;
 
 
     @Override
@@ -33,19 +39,29 @@ public class ThreeActivityModel implements ThreeActivityContract.Model<LoginNetI
 
                     @Override
                     public void onSuccess(UpdateNetBean updateNetBean) {
-
-                        int infoCode = updateNetBean.getInfoCode();
-                        if (infoCode == 200){
-                            info.loginNetSuccess("登录成功");
-                        }else{
-                            info.loginNetError("商户号或密码错误");
-                        }
-
+                            info.loginNetSuccess(updateNetBean.getMessage());
                     }
                 });
 
+    }
 
+    @Override
+    public void loginInterverNet() {
 
+        //没有取消一直都存在
+        subscribe = Observable.interval(2, TimeUnit.SECONDS)
+                .subscribe(new Action1<Long>() {
+                    @Override
+                    public void call(Long aLong) {
+                        System.out.println("我是接受到的消息" + aLong);
+                    }
+                });
+    }
 
+    @Override
+    public void onDestroy() {
+        if (!subscribe.isUnsubscribed()){
+            subscribe.unsubscribe();
+        }
     }
 }

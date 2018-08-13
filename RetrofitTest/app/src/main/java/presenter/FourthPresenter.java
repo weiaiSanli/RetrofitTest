@@ -3,6 +3,7 @@ package presenter;
 import javax.inject.Inject;
 
 import contract.FourthContract;
+import info.LoginNetInfo;
 
 public class FourthPresenter implements FourthContract.Presenter {
 
@@ -18,7 +19,21 @@ public class FourthPresenter implements FourthContract.Presenter {
     @Override
     public void loginNet() {
 
-        model.loginNet("nihao" , "heihei" , null);
+
+
+        model.loginNet(mView.getUserName(), mView.getPassWord(), new LoginNetInfo<String>() {
+            @Override
+            public void loginNetSuccess(String success) {
+                mView.loginSuccess(success);
+            }
+
+            @Override
+            public void loginNetError(String error) {
+
+                mView.error(error);
+
+            }
+        });
 
     }
 }

@@ -14,7 +14,7 @@ import utils.ToastUtil;
  * 创建时间:2017/7/6 16:22
  */
 @PerActivity
-@Component(modules = ActivityModule.class)
+@Component(dependencies = AppComponent.class , modules = ActivityModule.class)
 public interface BaseActivityComponent {
     Activity getActivity();
 }

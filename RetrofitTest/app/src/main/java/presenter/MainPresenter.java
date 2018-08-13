@@ -33,6 +33,7 @@ public class MainPresenter implements MainContract.Presenter {
     private MainContract.View mView;
     private Retrofit retrofit;
 
+    @Inject
     public MainPresenter(MainContract.View mView, Retrofit retrofit) {
 
         this.mView = mView ;
@@ -46,36 +47,22 @@ public class MainPresenter implements MainContract.Presenter {
 
         map = new HashMap();
         map.put("userName" , mView.getUserName());
-        map.put("passWord" , mView.getUserName());
+        map.put("passWord" , mView.getPassWord());
         System.out.println("MainPresenter中的Retrofit地址为:" + retrofit.toString() + mView.getUserName() + mView.getPassWord());
-//        new MainRetrofit(this.retrofit , map)
-        retrofit.create(NetworkApi.class).updateNetCall(map).subscribeOn(Schedulers.io())
+        retrofit.create(NetworkApi.class).updateNetCall(map)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new ResponseSubscriber<UpdateNetBean>() {
                     @Override
                     public void onFailure(Throwable e) {
-
                         e.printStackTrace();
                         mView.error("服务器繁忙,请稍后重试");
                     }
 
                     @Override
                     public void onSuccess(UpdateNetBean updateNetBean) {
-
-                        int infoCode = updateNetBean.getInfoCode();
-                        if (infoCode == 200){
-                            mView.loginSuccess("登录成功");
-                        }else{
-                            mView.error("商户号或密码错误");
-                        }
+                            mView.loginSuccess(updateNetBean.getMessage());
                     }
                 });
-
-
-
-
-
-
-
     }
 }

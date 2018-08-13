@@ -1,5 +1,8 @@
 package presenter;
 
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.text.TextUtils;
 
 import contract.ThreeActivityContract;
@@ -48,9 +51,18 @@ public class ThreeActivityPresenter extends MvpBasePresenter<ThreeActivityContra
             }
         });
 
+    }
 
+    @Override
+    public void loginInterverNet() {
 
+        mvpModule.loginInterverNet();
 
+    }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mvpModule.onDestroy();
     }
 }

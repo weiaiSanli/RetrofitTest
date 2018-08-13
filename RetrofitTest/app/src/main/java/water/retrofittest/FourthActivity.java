@@ -14,6 +14,7 @@ import contract.FourthContract;
 import module.ActivityModule;
 import module.FourthActivityModule;
 import presenter.FourthPresenter;
+import utils.UserContentURL;
 
 public class FourthActivity extends BaseActivity implements FourthContract.View, View.OnClickListener {
 
@@ -60,13 +61,14 @@ public class FourthActivity extends BaseActivity implements FourthContract.View,
 
     @Override
     public String getUserName() {
-        return "xingfushuizhan";
+        return UserContentURL.userName;
     }
 
     @Override
     public String getPassWord() {
-        return "123456";
+        return UserContentURL.passWord;
     }
+
 
     @Override
     public void loginSuccess(String success) {

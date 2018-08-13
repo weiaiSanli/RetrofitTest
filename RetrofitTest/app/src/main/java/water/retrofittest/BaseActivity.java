@@ -14,6 +14,7 @@ import javax.inject.Inject;
 import components.AppComponent;
 import components.DaggerBaseActivityComponent;
 import module.ActivityModule;
+import retrofit2.Retrofit;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -28,14 +29,12 @@ import utils.ToastUtil;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-
-
-    private Context mContext;
     @Inject
     Activity activity ;
-
-
-
+    @Inject
+    Retrofit mRetrofit ;
+    @Inject
+    Context mContext ;
 
 
     //两者方式关联App里面的唯一Component管理类,这是第一种,下面是第二种方式,在子类中重写setupActivityComponent()即可
@@ -47,9 +46,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //这是第二种:获取App中的component注入器即可使用context,Retrofit等全局对象
-        setupActivityComponent(((App)getApplication()).getAppComponent());
-        mContext = this;
-        DaggerBaseActivityComponent.builder().activityModule(new ActivityModule(this))
+        setupActivityComponent(getAppComponent());
+        DaggerBaseActivityComponent.builder().appComponent(getAppComponent()).activityModule(new ActivityModule(this))
                 .build();
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         setContentView(getLayoutResourceId());
@@ -125,7 +123,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                         boolean onMainThread = isOnMainThread();
                         //如果当前是主线程,直接弹出toast,并且不再向下执行了
                         if (onMainThread){
-                            MyToast.show(mContext , toast);
+                            MyToast.show(BaseActivity.this , toast);
                         }
                         return !onMainThread;
                     }
@@ -134,7 +132,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 .subscribe(new Action1<String>() {
                     @Override
                     public void call(String toast) {
-                        MyToast.show(mContext , toast);
+                        MyToast.show(BaseActivity.this , toast);
                     }
                 });
 

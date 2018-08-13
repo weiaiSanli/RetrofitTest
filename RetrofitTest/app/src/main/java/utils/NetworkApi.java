@@ -21,7 +21,7 @@ public interface NetworkApi {
      * 登录界面的请求数据 addressAdd
      */
 
-    @GET("delapp/userLogin.action")
+    @GET("appWater/userLogin.action")
     Observable<UpdateNetBean> updateNetCall(@QueryMap Map<String, String> map);
 
 

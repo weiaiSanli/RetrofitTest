@@ -30,18 +30,18 @@ public class SecondPresenter implements SecondContract.Presenter {
     @Override
     public void loginNet() {
 
-        mModel.loginNet(mView.getUserName(), mView.getUserName(), new LoginNetInfo<String>() {
+        mModel.loginNet(mView.getUserName(), mView.getPassWord(), new LoginNetInfo<String>() {
             @Override
             public void loginNetSuccess(String s) {
 
-                mView.error("服务器繁忙,请稍后重试");
 
+                mView.loginSuccess("登录成功");
             }
 
             @Override
             public void loginNetError(String error) {
 
-                mView.loginSuccess("登录成功");
+                mView.error("服务器繁忙,请稍后重试");
             }
         });
 

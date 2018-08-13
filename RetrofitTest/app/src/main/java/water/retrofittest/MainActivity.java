@@ -14,6 +14,7 @@ import module.MainActivityModule;
 import presenter.MainPresenter;
 import retrofit2.Retrofit;
 import utils.ToastUtil;
+import utils.UserContentURL;
 
 /**注意: Component会首先从Module维度中查找类实例，若找到就用Module维度创建类实例，并停止查找Inject维度。
  * 否则才是从Inject维度查找类实例。所以创建类实例级别Module维度要高于Inject维度。
@@ -27,6 +28,7 @@ import utils.ToastUtil;
 public class MainActivity extends BaseActivity implements MainContract.View, View.OnClickListener {
 
     //注解(Annotation)来标注目标类中所依赖的其他类，同样用注解来标注所依赖的其他类的构造函数，那注解的名字就叫Inject
+    //它告诉Dagger这个 构造方法，成员变量或者函数方法需要依赖注入。这样，Dagger就会构造一个这个类的实例并满足他们的依赖。
     @Inject
     MainPresenter presenter; //使用了Inject会先去module中找寻返回MainPresenter的对象
     private TextView tv;
@@ -56,7 +58,6 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
         btLogin.setOnClickListener(this);
         btNext.setOnClickListener(this);
 
-
     }
 
     /**
@@ -76,26 +77,18 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
 
     @Override
     protected void initData() {
-        /**
-         * 第一种方式导入presenter
-         */
-      /*  DaggerMainActivityComponent.builder()
-                .appComponent(getAppComponent())
-                .mainActivityModule(new MainActivityModule(this))
-                .activityModule(new ActivityModule(this)).build()
-                .inject(this);*/
 
         toastUtil.showToast("我是谁?");
-        System.out.println("MainActivity中的Retrofit地址为:" + retrofit.toString());
+        System.out.println("MainActivity中的Retrofit地址为:" + retrofit.toString() + "基类的地址为:" + mRetrofit.toString());
 
         /**
          * 当前打印的结果为:同一个对象地址:
          * System.out: MainActivity中的Retrofit地址为:retrofit2.Retrofit@e8da350
          * System.out: MainPresenter中的Retrofit地址为:retrofit2.Retrofit@e8da350
+         *
+         * MainActivity中的Retrofit地址为:retrofit2.Retrofit@26bf74fa基类的地址为:retrofit2.Retrofit@26bf74fa
          */
-
     }
-
 
     /**
      * 带有请求头token的请求封装,注意网络请求是在订阅的时候开始的.subscribe()方法的时候
@@ -104,55 +97,16 @@ public class MainActivity extends BaseActivity implements MainContract.View, Vie
     protected void onResume() {
         super.onResume();
 
-      /*  //通过网络请求拿到token
-        RetrofitServiceFactory.getAppService().tokenCall()
-                .flatMap(new Func1<String, Observable<UpdateNetBean>>() { //使用flatMap将得到的token添加到Observable()中
-
-                    private ArrayMap<String, String> tokenMap;
-
-                    @Override
-                    public Observable<UpdateNetBean> call(String s) {
-                        tokenMap = new ArrayMap<>();
-                        tokenMap.put("token", s);
-                        tokenMap.put("userName", "唯爱");
-
-                        //将token加入进来并请求网络,转化为Observable对象
-                        return UpdateFractory.getBuild()
-                                .name("needTokenCall")
-                                .map(tokenMap)
-                                .build().buildUseCaseObservable();
-                    }
-
-                 })
-                .observeOn(AndroidSchedulers.mainThread()) //注意线程切换
-                .subscribe(new ResponseSubscriber<UpdateNetBean>() {
-            @Override
-            public void onFailure(Throwable e) {
-                e.printStackTrace();
-                MyToast.show(MainActivity.this,"服务器繁忙,请稍后重试");
-            }
-
-            @Override
-            public void onSuccess(UpdateNetBean updateNetBean) {
-
-                int infoCode = updateNetBean.getInfoCode();
-                if (infoCode == 200){
-                    MyToast.show(MainActivity.this,"登录成功");
-                }else{
-                    MyToast.show(MainActivity.this,"商户号或密码错误");
-                }
-            }
-        });*/
     }
 
     @Override
     public String getUserName() {
-        return "xingfushuizhan";
+        return UserContentURL.userName;
     }
 
     @Override
     public String getPassWord() {
-        return "123456";
+        return UserContentURL.passWord;
     }
 
     @Override

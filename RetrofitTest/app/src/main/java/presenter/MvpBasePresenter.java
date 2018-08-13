@@ -3,7 +3,7 @@ package presenter;
 /**
  * 用于改善后的标准的mvp,在module层请求数据
  */
-public abstract class MvpBasePresenter<V,T> extends BasePresenter<V> {
+public abstract class MvpBasePresenter<V,T> extends BasePresenter<V>  {
 
     protected T mvpModule;
 
@@ -20,4 +20,11 @@ public abstract class MvpBasePresenter<V,T> extends BasePresenter<V> {
         super.detachView();
         this.mvpView = null;
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        detachView();
+    }
+
 }
