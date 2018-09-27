@@ -3,8 +3,9 @@ package water.retrofittest;
 import android.os.Bundle;
 
 import presenter.BasePresenter;
+import presenter.MvpBasePresenter;
 
-public abstract class MvpBaseActivity<P extends BasePresenter> extends BaseActivity {
+public abstract class MvpBaseActivity<P extends MvpBasePresenter> extends BaseActivity {
 
     public P mvpPresenter ;
 
@@ -16,11 +17,4 @@ public abstract class MvpBaseActivity<P extends BasePresenter> extends BaseActiv
 
     protected abstract P createPresenter();
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (mvpPresenter != null) {
-            mvpPresenter.detachView();
-        }
-    }
 }

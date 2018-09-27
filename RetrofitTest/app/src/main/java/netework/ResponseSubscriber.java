@@ -1,10 +1,13 @@
 package netework;
 
-import rx.Subscriber;
+import io.reactivex.observers.ResourceObserver;
 
-public abstract class ResponseSubscriber<T> extends Subscriber<T> {
+public abstract class ResponseSubscriber<T> extends ResourceObserver<T> {
+
+
+
     @Override
-    public void onCompleted() {
+    public void onComplete() {
 
     }
 

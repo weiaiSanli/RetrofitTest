@@ -2,9 +2,9 @@ package presenter;
 
 import java.util.Map;
 
+import io.reactivex.Observable;
 import netework.UseCase;
 import retrofit2.Retrofit;
-import rx.Observable;
 import utils.NetworkApi;
 
 /**

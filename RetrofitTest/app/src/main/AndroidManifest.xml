@@ -23,6 +23,7 @@
         <activity android:name=".SecondMvpActivity" />
         <activity android:name=".ThreeActivity"/>
         <activity android:name=".FourthActivity"/>
+        <activity android:name=".autodisponse.AutoDisponseTestActivity"/>
     </application>
 
 </manifest>

@@ -28,7 +28,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
-import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import water.retrofittest.App;
 import water.retrofittest.R;
@@ -53,7 +53,7 @@ public class AppRetrofit {
                    retrofit = new Retrofit.Builder()
                            .baseUrl(baseUrl) //刚刚添加进来的请求头
                            .client(getOkHttps())  //使用缓存,Interceptor截获每次网络请求用于缓存数据
-                           .addCallAdapterFactory(RxJavaCallAdapterFactory.create())  //添加Rxjava
+                           .addCallAdapterFactory(RxJava2CallAdapterFactory.create())  //添加Rxjava
                            .addConverterFactory(GsonConverterFactory.create())  //添加Gson解析
                            .build();
                }

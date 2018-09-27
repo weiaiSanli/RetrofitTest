@@ -9,18 +9,20 @@ import android.os.Looper;
 import android.support.v7.app.AppCompatActivity;
 
 
+import com.uber.autodispose.AutoDispose;
+import com.uber.autodispose.android.lifecycle.AndroidLifecycleScopeProvider;
+
 import javax.inject.Inject;
 
 import components.AppComponent;
 import components.DaggerBaseActivityComponent;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Predicate;
 import module.ActivityModule;
 import retrofit2.Retrofit;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.functions.Func1;
 import utils.MyToast;
-import utils.ToastUtil;
 
 /**
  * 基类
@@ -117,9 +119,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void showToast(String toast){
 
         Observable.just(toast)
-                .filter(new Func1<String, Boolean>() {
+                .filter(new Predicate<String>() {
                     @Override
-                    public Boolean call(String toast) {
+                    public boolean test(String toast) throws Exception {
                         boolean onMainThread = isOnMainThread();
                         //如果当前是主线程,直接弹出toast,并且不再向下执行了
                         if (onMainThread){
@@ -129,9 +131,10 @@ public abstract class BaseActivity extends AppCompatActivity {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Action1<String>() {
+                .as(AutoDispose.<String>autoDisposable(AndroidLifecycleScopeProvider.from(this)))
+                .subscribe(new Consumer<String>() {
                     @Override
-                    public void call(String toast) {
+                    public void accept(String toast) throws Exception {
                         MyToast.show(BaseActivity.this , toast);
                     }
                 });

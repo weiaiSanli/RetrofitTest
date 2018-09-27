@@ -10,15 +10,12 @@ import javax.inject.Inject;
 
 import bean.UpdateNetBean;
 import contract.MainContract;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.observers.ResourceObserver;
+import io.reactivex.schedulers.Schedulers;
 import netework.ResponseSubscriber;
-import netework.UpdateFractory;
 import retrofit2.Retrofit;
-import rx.Scheduler;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
-import utils.MyToast;
 import utils.NetworkApi;
-import water.retrofittest.MainActivity;
 
 /**
  * 类描述：使用inject将p引入到M

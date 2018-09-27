@@ -1,6 +1,7 @@
 package netework;
 
-import rx.Scheduler;
+
+import io.reactivex.Scheduler;
 
 public interface PostExecutionThread {
     Scheduler getScheduler();
