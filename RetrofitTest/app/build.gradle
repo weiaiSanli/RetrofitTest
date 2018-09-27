@@ -12,6 +12,15 @@ android {
 
         //解决方法数大于65K的
         multiDexEnabled = true
+
+        //对阿里路由跳转框架ARouter的支持
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = [AROUTER_MODULE_NAME: project.getName()]
+            }
+        }
+
+
     }
 
     dexOptions {
@@ -58,6 +67,9 @@ dependencies {
     //AutoDiaponse的使用
     implementation 'com.uber.autodispose:autodispose:0.8.0'
     implementation 'com.uber.autodispose:autodispose-android-archcomponents:0.8.0'
+
+    implementation 'com.alibaba:arouter-api:1.2.1'
+    annotationProcessor 'com.alibaba:arouter-compiler:1.2.1'
 
     //图标引用
     implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'

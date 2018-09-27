@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import water.retrofittest.arouter.ArounterActy1;
 import water.retrofittest.autodisponse.AutoDisponseTestActivity;
 
 public class SplashActivity extends BaseActivity implements View.OnClickListener {
@@ -20,11 +21,13 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
         Button bt_third = (Button) findViewById(R.id.bt_third);
         Button bt_fourth = (Button) findViewById(R.id.bt_fourth);
         Button bt_auto = (Button) findViewById(R.id.bt_auto);
+        Button bt_arouter = (Button) findViewById(R.id.bt_arouter);
         bt_main.setOnClickListener(this);
         bt_second.setOnClickListener(this);
         bt_third.setOnClickListener(this);
         bt_fourth.setOnClickListener(this);
         bt_auto.setOnClickListener(this);
+        bt_arouter.setOnClickListener(this);
 
 
     }
@@ -54,8 +57,12 @@ public class SplashActivity extends BaseActivity implements View.OnClickListener
                 startActivity(FourthActivity.class);
                 break;
 
-                case R.id.bt_auto:
+            case R.id.bt_auto:
                 startActivity(AutoDisponseTestActivity.class);
+                break;
+
+            case R.id.bt_arouter:
+                startActivity(ArounterActy1.class);
                 break;
 
 

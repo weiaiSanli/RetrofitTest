@@ -24,6 +24,14 @@
         <activity android:name=".ThreeActivity"/>
         <activity android:name=".FourthActivity"/>
         <activity android:name=".autodisponse.AutoDisponseTestActivity"/>
+
+        <activity android:name=".arouter.ArounterActy1"/>
+        <activity android:name=".arouter.ArounterActy2"/>
+
+        <activity android:name=".arouter.ArouterUrlActy">
+
+
+        </activity>
     </application>
 
 </manifest>

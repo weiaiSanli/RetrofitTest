@@ -43,4 +43,12 @@
         android:text="进入AutoDisponseActivity"
         />
 
+    <Button
+        android:id="@+id/bt_arouter"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="进入阿里模块化开发Arouter"
+        />
+
 </LinearLayout>
